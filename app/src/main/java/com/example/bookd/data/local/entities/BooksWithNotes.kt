@@ -10,5 +10,5 @@ data class BooksWithNotes(
         parentColumn = "id",
         entityColumn = "bookId"
     )
-    val books : List<BookEntity>
+    val notes : List<BookNoteEntity>
 )

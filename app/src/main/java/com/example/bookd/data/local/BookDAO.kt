@@ -7,7 +7,7 @@ import com.example.bookd.data.local.entities.BookNoteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface BookDao{
+interface BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun InsertBook(book : BookEntity)
 
@@ -15,16 +15,19 @@ interface BookDao{
     suspend fun InsertNote(note : BookNoteEntity)
 
     @Query("SELECT * FROM books")
-    fun getAllDishes() : Flow<List<BookEntity>>
+    fun getAllBooks() : Flow<List<BookEntity>>
 
     @Transaction
     @Query("SELECT * FROM books")
     fun getBooksWithNotes() : Flow<List<BooksWithNotes>>
 
-    @Query("SELECT * FROM book_notes WHERE bookId = :bookId")
-    fun getNotesByBook(bookId: Int): Flow<List<BookNoteEntity>>
+    @Transaction
+    @Query("SELECT * FROM books WHERE id = :bookId")
+    fun getBookWithNotesById(bookId: Long): Flow<BooksWithNotes?>
+
+    @Query("SELECT * FROM book_notes WHERE bookId = :bookId ORDER BY dateTimestamp DESC")
+    fun getNotesByBook(bookId: Long): Flow<List<BookNoteEntity>>
 
     @Delete
     suspend fun deleteNote(note : BookNoteEntity)
 }
-
