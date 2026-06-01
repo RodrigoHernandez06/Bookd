@@ -12,7 +12,7 @@ interface BookDao{
     suspend fun InsertBook(book : BookEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun InsertNote(notes : BooksWithNotes)
+    suspend fun InsertNote(note : BookNoteEntity)
 
     @Query("SELECT * FROM books")
     fun getAllDishes() : Flow<List<BookEntity>>
@@ -23,5 +23,8 @@ interface BookDao{
 
     @Query("SELECT * FROM book_notes WHERE bookId = :bookId")
     fun getNotesByBook(bookId: Int): Flow<List<BookNoteEntity>>
+
+    @Delete
+    suspend fun deleteNote(note : BookNoteEntity)
 }
 

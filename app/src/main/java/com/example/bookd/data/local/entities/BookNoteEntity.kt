@@ -17,10 +17,11 @@ import androidx.room.PrimaryKey
     ],
     indices = [Index(value = ["bookId"])]
     )
+
 data class BookNoteEntity(
     @PrimaryKey(autoGenerate = true)
     val noteId : Long = 0,
-    val bookId : Long = 0,
     val content : String,
-    val dateTimestamp : Long
-)
+    val dateTimestamp : Long,
+    val bookId : Long
+    )
